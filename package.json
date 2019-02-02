@@ -4,12 +4,7 @@
   "description": "Extend JavaScript arrays with vector capabilities",
   "main": "dist/lib/index.js",
   "module": "dist/lib-esm/index.js",
-  "jsnext:main": "dist/lib-esm/index.js",
-  "files": [
-    "dist/_bundles",
-    "dist/lib",
-    "dist/lib-esm"
-  ],
+  "types": "dist/lib-esm/index.d.ts",
   "scripts": {
     "tsc": "tsc -p src/tsconfig.json && tsc -p src/tsconfig.json -m es6 --outDir dist/lib-esm",
     "clean": "shx rm -rf dist",
@@ -31,11 +26,16 @@
     "vector",
     "array"
   ],
-  "author": "Felix Lemke",
+  "author": "Felix Lemke <flemke.dev@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ngfelixl/vectormath/issues"
   },
+  "files": [
+    "dist/lib",
+    "dist/lib-esm",
+    "dist/_bundles"
+  ],
   "homepage": "https://github.com/ngfelixl/vectormath#readme",
   "devDependencies": {
     "@types/chai": "^4.1.7",
