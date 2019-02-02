@@ -1,0 +1,44 @@
+{
+  "name": "vectormath",
+  "version": "0.0.1",
+  "description": "Extend JavaScript arrays with vector capabilities",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p ./src/tsconfig.json",
+    "test": "jest --config jestconfig.json --coverage",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "coverage": "cat coverage/lcov.info | coveralls",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngfelixl/vectormath.git"
+  },
+  "keywords": [
+    "math",
+    "vector",
+    "array"
+  ],
+  "author": "Felix Lemke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngfelixl/vectormath/issues"
+  },
+  "homepage": "https://github.com/ngfelixl/vectormath#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/jest": "^23.3.13",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
+    "jest": "^23.6.0",
+    "prettier": "^1.16.3",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.4"
+  }
+}
