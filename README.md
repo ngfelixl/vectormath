@@ -3,6 +3,7 @@
 ![build](https://travis-ci.org/ngfelixl/vectormath.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ngfelixl/vectormath/badge.svg?branch=master)](https://coveralls.io/github/ngfelixl/vectormath?branch=master)
 ![license](https://img.shields.io/npm/l/vectormath.svg)
+![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Extends the JavaScript array with n-dimensional Vector math capabilities. Well tested,
@@ -13,17 +14,18 @@ controlled error flow, focus on usability.
 1. [Installation](#1-installation)
 2. [The Vector class](#2-the-vector-class)
     1. [Instantiation and filling with values](#2.1-instatiation-and-filling-with-values)
-    2. [Dimensions](#2.2-dimensions)
+    2. [Data and Dimensions](#2.2-data-and-dimensions)
     3. [Distance](#2.3-distance)
     4. [Invert the vector](#2.4-invert-the-vector)
     5. [Normalization](#2.5-normalization)
     6. [(Signed) angle](#2.6-signed-angle)
-    7. [Addition](#2.7-addition)
+    7. [Addition (and subtraction)](#2.7-addition-and-subtraction)
     8. [Multiplication](#2.8-multiplication)
     9. [Rotation](#2.9-rotation)
 3. [Testing](#3-testing)
 4. [Roadmap](#4-roadmap)
 5. [Contributing](#5-contributing)
+6. [Get in touch](#6-get-in-touch)
 
 ## 1 Installation
 
@@ -40,7 +42,6 @@ to specific number of dimensions and will throw a controlled
 error, e.g. cross-product requires three dimensions. It extends
 the standard JavaScript `Array` class, so it is aware of all
 default array features like `fill` or `map`.
-
 
 ### 2.1 Instatiation and filling with values
 
@@ -78,12 +79,19 @@ It is also possible to chain these like
 const vector = new Vector(20).random().normalize();
 ```
 
-### 2.2 Dimensions
+### 2.2 Data and Dimensions
 
 Since this is an extension of the JavaScript **Array** there
 is the everyone knowing `length` function. This returns
 the number of elements and the number of elements is the array
-dimension.
+dimension. You can access each entry similarly with `vector[0]`
+style. Also it is possible to print the vector like
+
+```typescript
+const vector = new Vector(1, 3, 4);
+console.log(vector.length);     // 3
+console.log(vector);            // [1, 3, 4]
+```
 
 ### 2.3 Distance
 
@@ -96,10 +104,10 @@ vec.distance;
 
 ### 2.4 Invert the vector
 
-Compute the length of the vector by
+Compute the inversion of the (here 3-dimensional) vector by.
 
 ```typescript
-const vec = new Vector(4).random();
+const vec = new Vector(3).random();
 vec.invert();
 ```
 
@@ -121,7 +129,9 @@ returns the angle between two n-dimensional vectors
 in the range [0, PI].
 
 ```typescript
-const angle = vector1.angle(vector2);
+const first = new Vector(20).random();
+const second = new Vector(20).random();
+const angle = first.angle(second);
 ```
 
 Especially in 2D robotics, games and other movement tasks
@@ -137,22 +147,87 @@ executing vector the `signedAngle` function is provided.
 The angle will be in the range of (-PI, PI].
 
 ```typescript
-const angle = vector1.signedAngle(vector2);
+const angle = origin.signedAngle(target);
 ```
 
 Imagine you look into the direction of **this**. If
 the parameter vector is to your left, the angle is positive,
 if the parameter vector is to your right, the angle is negative.
 
+### 2.7 Addition (and Subtraction)
+
+To add a vector or a scalar to a vector you can use the build-in
+`add` function. It automatically detects if it is a scalar
+or a vector.
+
+```typescript
+const left  = new Vector(2, 4, 0);
+const right = new Vector(-3, 1, 2);
+const vec1 = new Vector(1).fill(10);
+
+const vectorSum = left.add(right);     // []
+const scalarSum = left.add(5);         //
+const vec1Sum   = left.add(scalarVec); // 
+```
+
+Vector-vector addition requires the vectors to have the same
+dimensions. A vector-scalar addition multiplicates each entry
+with that scalar.
+
+### 2.8 Multiplication
+
+There are several methods for different multiplication types. The
+first one is known as the `dot`-product. For two equally dimensioned
+vectors it returns the scalar-product. For vector-scalar multiplication
+it returns the scaled vector.
+
+```typescript
+const vector1 = new Vector(1, -2, 3);
+const vector2 = new Vector(2, 4, -1);
+
+const scalar = vector1.dot(vector2);  // -11
+const vector = vector1.dot(2);        // [2, -4, 6]
+```
+
+The next type of multiplication is the `cross` product. This type of
+multiplication is only available for 3-dimensional vectors (or in theory 7D).
+
+```typescript
+const vector1 = new Vector(1, 0, 0);
+const vector2 = new Vector(0, 1, 0);
+
+const vector = vector1.cross(vector2);  // [0, 0, 1]
+```
+
+The last multiplication is the element-wise multiplication. For this purpose
+the `multiplyElementWise` is provided. It requires two equally dimensioned
+vectors and returns a vector with the same dimension.
+
+### 2.9 Rotation
+
+Rotation is currently only available in 2-dimensions. It rotates a vector
+by an angle [radians]. This operation is chainable.
+
+```typescript
+const vector = new Vector(1, 0);
+vector.rotate2D(Math.PI);     // [-1, 0];
+```
+
+It uses the 2D rotation matrix.
+
+```
+| cos(angle)  -sin(angle) |
+| sin(angle)   cos(angle) |
+```
+
 ## 3 Testing
 
 Code quality is one of the most important things in computer
 science. Just the vector class has got [more than 50 tests](./test/vector.spec.ts).
+They might be also useful for understanding this library.
 This minimizes code quality issues, bugs and improves the controlled
-error-flow significantly.
-
-Anyway. If there are any bugs or missleading calculations, feel
-free to contribute. You are very welcome.
+error-flow significantly. Pull requests should include tests
+for usual and edge cases as well.
 
 ## 4 Roadmap
 
@@ -164,9 +239,9 @@ free to contribute. You are very welcome.
 
 ## 5 Contributing
 
-Contributions and new ideas are very welcome.
+Pull requests, issue reports and feature requests are very welcome.
 
-## 5 Get in touch
+## 6 Get in touch
 
 [![twitter](https://img.shields.io/badge/twitter-%40ngfelixl-blue.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ngfelixl)
 [![github](https://img.shields.io/badge/github-%40ngfelixl-blue.svg?logo=github)](https://github.com/ngfelixl)
