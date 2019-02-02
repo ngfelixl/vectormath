@@ -38,8 +38,13 @@ export class Vector extends Array<number> {
   constructor(...vector: number[]) {
     super(...vector);
 
-    // Set the prototype explicitly, required for ES5.
-    Object.setPrototypeOf(this, Vector.prototype);
+    // [1] Set the prototype explicitly, required for ES5.
+    // Object.setPrototypeOf(this, Vector.prototype);
+
+    // [1] Restore prototype chain
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(this, new.target.prototype);
+    }
 
     return this;
   }
