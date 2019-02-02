@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2015",
     "module": "commonjs",
+    "target": "es5",
     "declaration": true,
     "sourceMap": true,
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "outDir": "./dist",
-    "rootDirs": ["./"],
-    "sourceRoot": "."
+    "outDir": "./dist/lib",
+    "rootDir": "./",
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
   "exclude": [
     "./dist"
