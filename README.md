@@ -1,4 +1,4 @@
-# Vectormath
+# Vector
 
 ![build](https://travis-ci.org/ngfelixl/vectormath.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ngfelixl/vectormath/badge.svg?branch=master)](https://coveralls.io/github/ngfelixl/vectormath?branch=master)
