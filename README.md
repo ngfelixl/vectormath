@@ -2,8 +2,9 @@
 
 ![build](https://travis-ci.org/ngfelixl/vectormath.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ngfelixl/vectormath/badge.svg?branch=master)](https://coveralls.io/github/ngfelixl/vectormath?branch=master)
-![license](https://img.shields.io/npm/l/@linearalgebra/vector.svg)
 ![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
+[![npmversion](https://img.shields.io/npm/v/@linearalgebra/vector.svg)](https://www.npmjs.com/package/@linearalgebra/vector)
+![license](https://img.shields.io/npm/l/@linearalgebra/vector.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Extends the JavaScript array with n-dimensional Vector math capabilities. Well tested,
