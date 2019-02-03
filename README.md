@@ -22,15 +22,16 @@ controlled error flow, focus on usability.
     7. [Addition (and subtraction)](#27-addition-and-subtraction)
     8. [Multiplication](#28-multiplication)
     9. [Rotation](#29-rotation)
-3. [Testing](#3-testing)
-4. [Roadmap](#4-roadmap)
-5. [Contributing](#5-contributing)
-6. [Get in touch](#6-get-in-touch)
+3. [Convex Hull](#3-convex-hull)
+4. [Testing](#4-testing)
+5. [Roadmap](#5-roadmap)
+6. [Contributing](#6-contributing)
+7. [Get in touch](#7-get-in-touch)
 
 ## 1 Installation
 
 ```
-npm install vectormath
+npm install @linearalgebra/vector
 ```
 
 ## 2 The Vector class
@@ -46,8 +47,15 @@ default array features like `fill` or `map`.
 ### 2.1 Instatiation and filling with values
 
 There are several ways to instatiate and fill vectors. One is
-to pass in the values as parameters. The vector wil be of the
-dimension of the passed in values.
+to pass in the values as parameters. Import the vector class
+first.
+
+```typescript
+import { Vector } from '@linearalgebra/vector';
+```
+
+The vector has got the dimension of the number of passed
+in values.
 
 ```typescript
 const vec = new Vector(4, -1, 9);
@@ -220,7 +228,34 @@ It uses the 2D rotation matrix.
 | sin(angle)   cos(angle) |
 ```
 
-## 3 Testing
+## 3 Convex Hull
+
+The script also contains a helper function to detect the 2-dimensional
+convex hull out of a bunch of points (vectors). Import it
+
+```typescript
+import { convexHull } from '@linearalgebra/vector';
+```
+
+The convex-hull sorts the points by *x*-coordinate, or *y*-coordinate if
+equal, ascending. Afterwards it calculates the upper hull and then the lower
+hull. In the end both hulls will be merged. This is an example for 20 randomly
+created 2-dimensional vectors.
+
+```typescript
+// Create an array of 20 2-dimensional vectors
+const vectors: Vector[] = [];
+for (let i = 0; i < 20; i++) {
+    vectors.push(new Vector(2).random());
+}
+
+// Determine the complex hull
+const hull = convexHull(vectors);
+```
+
+The algorithms computation time is *O(n* log*n)* due to sorting.
+
+## 4 Testing
 
 Code quality is one of the most important things in computer
 science. Just the vector class has got [more than 50 tests](./test/vector.spec.ts).
@@ -229,7 +264,7 @@ This minimizes code quality issues, bugs and improves the controlled
 error-flow significantly. Pull requests should include tests
 for usual and edge cases as well.
 
-## 4 Roadmap
+## 5 Roadmap
 
 - Implement matrices
 - Implement doubly-connected edge list
@@ -237,11 +272,11 @@ for usual and edge cases as well.
 - Implement Delaunay triangulation
 - Implement polygon intersections
 
-## 5 Contributing
+## 6 Contributing
 
 Pull requests, issue reports and feature requests are very welcome.
 
-## 6 Get in touch
+## 7 Get in touch
 
 [![twitter](https://img.shields.io/badge/twitter-%40ngfelixl-blue.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ngfelixl)
 [![github](https://img.shields.io/badge/github-%40ngfelixl-blue.svg?logo=github)](https://github.com/ngfelixl)
