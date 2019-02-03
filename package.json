@@ -1,5 +1,5 @@
 {
-  "name": "@linearalgebra/vector",
+  "name": "@geometric/vector",
   "version": "0.0.5",
   "description": "Extend JavaScript arrays with vector capabilities",
   "main": "dist/lib/index.js",

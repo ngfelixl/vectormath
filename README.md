@@ -3,8 +3,8 @@
 ![build](https://travis-ci.org/ngfelixl/vectormath.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ngfelixl/vectormath/badge.svg?branch=master)](https://coveralls.io/github/ngfelixl/vectormath?branch=master)
 ![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
-[![npmversion](https://img.shields.io/npm/v/@linearalgebra/vector.svg)](https://www.npmjs.com/package/@linearalgebra/vector)
-![license](https://img.shields.io/npm/l/@linearalgebra/vector.svg)
+[![npmversion](https://img.shields.io/npm/v/@geometric/vector.svg)](https://www.npmjs.com/package/@geometric/vector)
+![license](https://img.shields.io/npm/l/@geometric/vector.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Extends the JavaScript array with n-dimensional Vector math capabilities. Well tested,
@@ -32,7 +32,7 @@ controlled error flow, focus on usability.
 ## 1 Installation
 
 ```
-npm install @linearalgebra/vector
+npm install @geometric/vector
 ```
 
 ## 2 The Vector class
@@ -52,7 +52,7 @@ to pass in the values as parameters. Import the vector class
 first.
 
 ```typescript
-import { Vector } from '@linearalgebra/vector';
+import { Vector } from '@geometric/vector';
 ```
 
 The vector has got the dimension of the number of passed
@@ -235,7 +235,7 @@ The script also contains a helper function to detect the 2-dimensional
 convex hull out of a bunch of points (vectors). Import it
 
 ```typescript
-import { convexHull } from '@linearalgebra/vector';
+import { convexHull } from '@geometric/vector';
 ```
 
 The convex-hull sorts the points by *x*-coordinate, or *y*-coordinate if
