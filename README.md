@@ -31,7 +31,7 @@ controlled error flow, focus on usability.
 ## 1 Installation
 
 ```
-npm install vectormath
+npm install @linearalgebra/vector
 ```
 
 ## 2 The Vector class
@@ -47,8 +47,15 @@ default array features like `fill` or `map`.
 ### 2.1 Instatiation and filling with values
 
 There are several ways to instatiate and fill vectors. One is
-to pass in the values as parameters. The vector wil be of the
-dimension of the passed in values.
+to pass in the values as parameters. Import the vector class
+first.
+
+```typescript
+import { Vector } from '@linearalgebra/vector';
+```
+
+The vector has got the dimension of the number of passed
+in values.
 
 ```typescript
 const vec = new Vector(4, -1, 9);
