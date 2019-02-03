@@ -32,7 +32,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist', '_bundles'),
     filename: '[name].js',
     libraryTarget: 'umd',
-    library: 'MyLib',
+    library: 'vectormath',
     umdNamedDefine: true
   }
 };

@@ -9,13 +9,15 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "outDir": "./dist/lib",
-    "rootDir": "./",
+    "rootDir": "./src",
     "lib": [
       "es2015",
       "dom"
     ]
   },
   "exclude": [
-    "./dist"
+    "./lib",
+    "./lib-esm",
+    "./test"
   ]
 }
