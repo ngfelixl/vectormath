@@ -3,7 +3,8 @@
   "rules": {
     "member-access": [true, "no-public"],
     "prefer-for-of": false,
-    "no-trailing-whitespace": true
+    "no-trailing-whitespace": true,
+    "no-console": false
   },
   "linterOptions": {
     "exclude": [
