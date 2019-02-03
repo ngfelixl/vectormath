@@ -2,7 +2,7 @@
 
 ![build](https://travis-ci.org/ngfelixl/vectormath.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ngfelixl/vectormath/badge.svg?branch=master)](https://coveralls.io/github/ngfelixl/vectormath?branch=master)
-![license](https://img.shields.io/npm/l/vectormath.svg)
+![license](https://img.shields.io/npm/l/@linearalgebra/vector.svg)
 ![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
