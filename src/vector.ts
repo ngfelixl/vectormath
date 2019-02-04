@@ -257,6 +257,26 @@ export class Vector extends Array<number> {
   }
 
   /**
+   * Calculate the element wise multiplication of two vectors.
+   * This operation is also called Hadamard-product or Schur-product.
+   * It requires the vector dimensions to be equal.
+   * @param vector
+   *
+   */
+  divideElementWise(vector: Vector): Vector {
+    if (this.length !== vector.length) {
+      throw new Error(`Can't divide unequal sized vectors element-wise`);
+    }
+
+    const result = new Vector();
+    for (let i = 0; i < this.length; i++) {
+      result[i] = this[i] / vector[i];
+    }
+
+    return result;
+  }
+
+  /**
    * ## Invert
    *
    * Chainable function for vector inversion.

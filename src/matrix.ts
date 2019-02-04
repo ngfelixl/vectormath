@@ -150,6 +150,51 @@ export class Matrix extends Array<Vector> {
   }
 
   /**
+   * Solves the system of linear equations using Cramer's rule. Throws an
+   * error if there is no solution.
+   * @param vector
+   */
+  solve(vector: Vector): Vector | null {
+    if (vector.length !== this.shape[1]) {
+      throw new Error(`Vector has to be of size ${this.shape[1]} but is ${vector.length}`);
+    }
+    const det = this.determinant;
+    if (det !== 0) {
+      let determinants = new Vector(vector.length);
+
+      for (let i = 0; i < vector.length; i++) {
+        const temp = new Matrix().from(this);
+        temp.transpose();
+        temp[i].from(vector);
+        temp.transpose();
+        determinants[i] = temp.determinant;
+      }
+
+      determinants = determinants.dot(1 / det) as Vector;
+
+      return determinants;
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Diagonlize the matrix to the upper triangular using
+   * Gauss elimination.
+   * @param matrix
+   */
+  diagonalize() {
+    for (let i = 0; i < this.length; i++) {
+      for (let j = i + 1; j < this.length; j++) {
+        const factor = this[j][i] / this[i][i];
+        const row = this[i].dot(factor) as Vector;
+        this[j] = this[j].add(row.invert());
+      }
+    }
+    return this;
+  }
+
+  /**
    * Computes the trace of the matrix. Matrix has to be
    * of shape NxN
    */

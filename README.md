@@ -7,9 +7,9 @@
 ![license](https://img.shields.io/npm/l/@geometric/vector.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Extends the JavaScript array with n-dimensional Vector math capabilities. Well tested,
-controlled error flow, focus on usability. This is an early stage, so it might be faced
-some API changes in the future.
+Extends the JavaScript array with n-dimensional Vector and Matrix math capabilities. Well tested,
+controlled error flow, focus on usability. It even is capable of solving systems of linear equations.
+This is an early stage, so it might be faced some API changes in the future.
 
 ## Table of contents
 
@@ -31,6 +31,8 @@ some API changes in the future.
     4. [Trace](#34-trace)
     5. [Submatrix extraction](#35-submatrix-extraction)
     6. [Transpose](#36-transpose)
+    7. [Solve system of linear equations](#37-system-of-linear-equations)
+    8. [Diagonal matrices](#38-diagonal-matrices)
 4. [Convex Hull](#4-convex-hull)
 5. [Testing](#5-testing)
 6. [Roadmap](#6-roadmap)
@@ -216,9 +218,9 @@ const vector2 = new Vector(0, 1, 0);
 const vector = vector1.cross(vector2);  // [0, 0, 1]
 ```
 
-The last multiplication is the element-wise multiplication. For this purpose
-the `multiplyElementWise` is provided. It requires two equally dimensioned
-vectors and returns a vector with the same dimension.
+The last multiplication is the element-wise multiplication / division. For this purpose
+the `multiplyElementWise` or `divideElementWise` is provided. It requires two
+equally dimensioned vectors and returns a vector with the same dimension.
 
 ### 2.9 Rotation
 
@@ -348,6 +350,35 @@ swaps both dimensions.
 const matrix = new Matrix().from([[1, 2], [3, 4], [5, 6]]);
 matrix.transpose();
 console.log(matrix); // [[1, 3, 5], [2, 4, 6]]
+```
+
+### 3.7 System of linear equations
+
+The matrix class is also able to solve systems of linear equations.
+
+```
+Ax = b
+```
+
+where *A* is the matrix, *b* is the result (vector) and *x* is the vector we
+want to compute.
+
+```typescript
+const matrix = new Matrix().identity(3);
+const vector = new Vector(-1, 2, -3);
+const result = matrix.solve(vector);  // [-1, 2, -3]
+```
+
+This also works with non-trivial cases. It returns `null` if no solution was found.
+
+### 3.8 Diagonal matrices
+
+The matrix diagonalization is based on **Gauss**-elimination. Use it as follows
+
+```
+const matrix = new Matrix().from([2, 3, 4], [1, 2, 3], [5, 6, 7]);
+matrix.diagonalize();
+console.log(matrix);  // [[x, y, z], [0, a, b], [0, 0, c]]
 ```
 
 ## 4 Convex Hull
