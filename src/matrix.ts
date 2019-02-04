@@ -116,7 +116,11 @@ export class Matrix extends Array<Vector> {
   }
 
   /**
-   *
+   * Multiplicates the matrix with a given input. If the input is
+   * a matrix, it will perform a matrix-matrix multiplication. If
+   * it is a vector, it determines the matrix-vector product, and
+   * if it is a scalar value, each element will be multiplied by
+   * it.
    * @param multiplicator
    */
   dot<T extends Vector | Matrix | number>(multiplicator: T): T extends Vector ? Vector : Matrix;

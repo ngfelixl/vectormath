@@ -200,6 +200,7 @@ export class Vector extends Array<number> {
    * it will perform a vector-scalar-multiplication.
    * @param vector
    */
+  dot<T extends Vector | number[] | number>(vector: T): T extends Vector ? number : Vector;
   dot(vector: Vector | number[] | number): Vector | number {
     if (vector instanceof Vector || vector instanceof Array) {
       if (vector.length === 1) {
