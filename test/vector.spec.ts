@@ -266,6 +266,26 @@ describe('vector', () => {
     });
   });
 
+
+  describe('divideElementWise', () => {
+    it('should divide two 3D vectors element wise', () => {
+      const vector = new Vector(3, 4, 5);
+
+      const multiplication = vector.divideElementWise(vector);
+
+      expect(multiplication).to.eql([1, 1, 1]);
+    });
+
+    it('should throw an error if vector dimensions are not equal', () => {
+      const vector1 = new Vector(0, 1);
+      const vector2 = new Vector(2, 3, 4);
+
+      expect(() => { vector1.divideElementWise(vector2); })
+          .to.throw(`Can't divide unequal sized vectors element-wise`);
+    });
+  });
+
+
   describe('signedAngle', () => {
     it('should calculate PI/2 for [1, 0] and [0, 1]', () => {
       const vector1 = new Vector(1, 0);

@@ -1,7 +1,8 @@
 import { Matrix, Vector } from '../src/index';
 import { expect } from 'chai';
 
-const test2X3 = [
+const ERROR_THRESHOLD = 0.000000000000001;
+const test3x2 = [
   [2, 4], [1, -1], [2.5, 1]
 ]
 
@@ -98,7 +99,7 @@ describe('matrix', () => {
     });
 
     it('should throw an error if matrix not NxN-shaped', () => {
-      const matrix = new Matrix().from(test2X3);
+      const matrix = new Matrix().from(test3x2);
 
       expect(() => { matrix.identity(); })
           .to.throw(new RegExp('Matrix has to be NxN shaped'));
@@ -194,7 +195,7 @@ describe('matrix', () => {
 
     describe('scalar', () => {
       it('should be multiplicate scalar values', () => {
-        const matrix = new Matrix(2, 3).from(test2X3);
+        const matrix = new Matrix(2, 3).from(test3x2);
         
         const result = matrix.dot(2);
   
@@ -205,7 +206,7 @@ describe('matrix', () => {
       });
 
       it('should multiplicate float scalar values', () => {
-        const matrix = new Matrix(2, 3).from(test2X3);
+        const matrix = new Matrix(2, 3).from(test3x2);
 
         const result = matrix.dot(0.5);
 
@@ -217,7 +218,7 @@ describe('matrix', () => {
 
     describe('vector', () => {
       it('should be multiplicate vectors', () => {
-        const matrix = new Matrix(3, 2).from(test2X3);
+        const matrix = new Matrix(3, 2).from(test3x2);
         const vector = new Vector(-1, 2);
         const result = matrix.dot(vector);
   
@@ -226,7 +227,7 @@ describe('matrix', () => {
       });
 
       it('should throw an error if vector has wrong dimensions', () => {
-        const matrix = new Matrix(3, 2).from(test2X3);
+        const matrix = new Matrix(3, 2).from(test3x2);
         const vector = new Vector(4).zeros();
 
         expect(() => { matrix.dot(vector); })
@@ -279,6 +280,72 @@ describe('matrix', () => {
 
         expect(matrix.shape).to.eql([2, 5]);
       });
+    });
+  });
+
+  describe('solve', () => {
+    it('should solve the 3d identity linear system of equations', () => {
+      const matrix = new Matrix().identity(3);
+      const vector = new Vector(1, 2, 3);
+      const solution = matrix.solve(vector);
+
+      expect(solution).to.eql([1, 2, 3]);
+    });
+
+    it('should solve the test 2d linear system of equations', () => {
+      const matrix = new Matrix().from([
+        [2, 4],
+        [-1, 3]
+      ]);
+      const vector = new Vector(0.5, -1);
+
+      const solution = matrix.solve(vector);
+      expect(solution).to.exist;
+
+      if (solution) {
+        const error = [Math.abs(solution[0] - 0.55), Math.abs(solution[1] + 0.15)];
+        expect(error[0]).to.lessThan(ERROR_THRESHOLD);
+        expect(error[1]).to.lessThan(ERROR_THRESHOLD);
+      }
+    });
+
+    it('should throw an error if vector has invalid dimenions', () => {
+      const matrix = new Matrix(2, 2);
+      const vector = new Vector(3);
+      
+      expect(() => { matrix.solve(vector); })
+          .to.throw(new RegExp(`Vector has to be of size 2 but is 3`));
+    });
+
+    it('should return NULL if system is not solvable', () => {
+      const matrix = new Matrix(2, 2).zeros();
+      const vector = new Vector(2).random();
+
+      const solution = matrix.solve(vector);
+
+      expect(solution).to.be.null;
+    });
+  });
+
+  describe('diagonalize', () => {
+    it('should do nothing on diagonal matrices', () => {
+      const data = [
+        [1, 23, 1],
+        [0, 1, 3],
+        [0, 0, 3]
+      ];
+      const matrix = new Matrix().from(data);
+      matrix.diagonalize();
+
+      expect(matrix).to.eql(data);
+    });
+
+    it('should diagonalize a 3x2 matrix', () => {
+      const matrix = new Matrix().from(test3x2);
+      matrix.diagonalize();
+      expect(matrix[1][0]).to.equal(0);
+      expect(matrix[2][0]).to.equal(0);
+      expect(matrix[2][1]).to.equal(0);
     });
   });
 });
