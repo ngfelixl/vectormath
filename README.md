@@ -8,7 +8,8 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Extends the JavaScript array with n-dimensional Vector math capabilities. Well tested,
-controlled error flow, focus on usability.
+controlled error flow, focus on usability. This is an early stage, so it might be faced
+some API changes in the future.
 
 ## Table of contents
 
@@ -23,11 +24,18 @@ controlled error flow, focus on usability.
     7. [Addition (and subtraction)](#27-addition-and-subtraction)
     8. [Multiplication](#28-multiplication)
     9. [Rotation](#29-rotation)
-3. [Convex Hull](#3-convex-hull)
-4. [Testing](#4-testing)
-5. [Roadmap](#5-roadmap)
-6. [Contributing](#6-contributing)
-7. [Get in touch](#7-get-in-touch)
+3. [The Matrix](#3-the-matrix)
+    1. [Instantiation and filling](#31-instantiation-and-filling)
+    2. [Multiplication](#32-multiplication)
+    3. [Determinant](#33-determinant)
+    4. [Trace](#34-trace)
+    5. [Submatrix extraction](#35-submatrix-extraction)
+    6. [Transpose](#36-transpose)
+4. [Convex Hull](#4-convex-hull)
+5. [Testing](#5-testing)
+6. [Roadmap](#6-roadmap)
+7. [Contributing](#7-contributing)
+8. [Get in touch](#8-get-in-touch)
 
 ## 1 Installation
 
@@ -229,7 +237,120 @@ It uses the 2D rotation matrix.
 | sin(angle)   cos(angle) |
 ```
 
-## 3 Convex Hull
+## 3 The Matrix
+
+### 3.1 Instantiation and filling
+
+The matrix class extends the JavaScript Array class containing Vectors
+as elements. It provides several helper classes and build in integrity
+checks. You can instantiate an empty matrix without any arguments.
+
+```typescript
+const matrix = new Matrix()
+```
+
+or with shape arguments. E.g. passing in 2 and 3 generates a
+2x3 matrix.
+
+```typescript
+const matrix = new Matrix(2, 3);
+```
+
+To create the identity matrix there are two ways. Providing the parameter
+resizes the given matrix. Providing no parameter requires an NxN shaped
+matrix.
+
+```typescript
+const matrix = new Matrix().identity(3);
+const matrix = new Matrix(3, 3).identity();
+```
+
+There are also the methods `zeros()` and `random()` which fill the entire
+matrix with either 0s or randomly created numbers between 0 and 1. To get the matrix
+shape you can use
+
+```typescript
+const matrix1 = new Matrix(3, 4);
+const matrix2 = new Matrix().identity(2);
+const matrix3 = new Matrix().from([[0, 1], [1, 0], [-1, 0]]);
+
+console.log(matrix1.shape);  // [3, 4]
+console.log(matrix2.shape);  // [2, 2]
+console.log(matrix3.shape);  // [3, 2]
+```
+
+### 3.2 Multiplication
+
+There are three types of matrix multiplications. Matrix-matrix, matrix-vector
+or matrix-scalar multiplication. For this purpose the `dot` method is provided.
+It automatically detects the parameter type and returns either a vector (if
+it is a matrix-vector multiplication) or a matrix. Imagine the following setup
+
+```typescript
+const matrix = new Matrix().from([
+  [2, 1, -1],
+  [1, 0.5, 2]
+]);
+const zeros  = new Matrix(3, 4).zeros()
+const vector = new Vector(1, 2, 3);
+const scalar = 4;
+```
+
+Can be used as follows
+
+```typescript
+const matvec = matrix.dot(vector); // Vector [1, 8]
+const matnum = matrix.dot(scalar); // Matrix [[8, 4, -4], [4, 2, 8]]
+const matmat = matrix.dot(zeros);  // Matrix 2x4 filled with zeroes
+```
+
+### 3.3 Determinant
+
+Computes the determinant of the n-dimensional, equally shaped matrix.
+
+```typescript
+const matrix = new Matrix().identity(3);
+const determinant = matrix.determinant;  // 3
+```
+
+### 3.4 Trace
+
+Computes the trace (the sum over all diagonal entries)
+of the n-dimensional, equally shaped matrix.
+
+```typescript
+const matrix = new Matrix().from([[2, 3], [-1, -4]]);
+const trace = matrix.trace;  // -2
+```
+
+### 3.5 Submatrix extraction
+
+Extracts a part of a larger matrix. Requires lower and
+upper x-range indices and lower and upper y-range indices.
+
+```typescript
+const matrix = new Matrix().from([
+  [3, 4, 1, 5],
+  [0, 1, 2, 9],
+  [-1, 0, 2, -4]
+]);
+
+const extraction = matrix.extract([1, 2], [2, 3]);
+// [[2, 9], [2, -4]]
+```
+
+### 3.6 Transpose
+
+To transpose the matrix you can use the `transpose` method. It
+swaps both dimensions.
+
+```
+const matrix = new Matrix().from([[1, 2], [3, 4], [5, 6]]);
+matrix.transpose();
+console.log(matrix); // [[1, 3, 5], [2, 4, 6]]
+```
+
+## 4 Convex Hull
 
 The script also contains a helper function to detect the 2-dimensional
 convex hull out of a bunch of points (vectors). Import it
@@ -256,7 +377,7 @@ const hull = convexHull(vectors);
 
 The algorithms computation time is *O(n* log*n)* due to sorting.
 
-## 4 Testing
+## 5 Testing
 
 Code quality is one of the most important things in computer
 science. Just the vector class has got [more than 50 tests](./test/vector.spec.ts).
@@ -265,19 +386,19 @@ This minimizes code quality issues, bugs and improves the controlled
 error-flow significantly. Pull requests should include tests
 for usual and edge cases as well.
 
-## 5 Roadmap
+## 6 Roadmap
 
-- Implement matrices
+- Implement eigenvectors and eigenvalues
 - Implement doubly-connected edge list
 - Implement Voronoi diagrams
 - Implement Delaunay triangulation
 - Implement polygon intersections
 
-## 6 Contributing
+## 7 Contributing
 
 Pull requests, issue reports and feature requests are very welcome.
 
-## 7 Get in touch
+## 8 Get in touch
 
 [![twitter](https://img.shields.io/badge/twitter-%40ngfelixl-blue.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ngfelixl)
 [![github](https://img.shields.io/badge/github-%40ngfelixl-blue.svg?logo=github)](https://github.com/ngfelixl)
