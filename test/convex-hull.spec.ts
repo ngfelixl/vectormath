@@ -65,10 +65,10 @@ describe('convexHull', () => {
       ));
     }
     const hull = convexHull(data);
-    
+
     expect(hull.length).to.equal(100);
   });
-  
+
   it('should not remove a point out of 100 points on circle surface', () => {
     data = [];
     for (let i = 0; i < 100; i++) {
