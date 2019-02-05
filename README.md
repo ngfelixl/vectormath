@@ -34,10 +34,11 @@ This is an early stage, so it might be faced some API changes in the future.
     7. [Solve system of linear equations](#37-system-of-linear-equations)
     8. [Diagonal matrices](#38-diagonal-matrices)
 4. [Convex Hull](#4-convex-hull)
-5. [Testing](#5-testing)
-6. [Roadmap](#6-roadmap)
-7. [Contributing](#7-contributing)
-8. [Get in touch](#8-get-in-touch)
+5. [Doubly-connected edge list](#5-doubly-connected-edge-list)
+6. [Testing](#6-testing)
+7. [Roadmap](#7-roadmap)
+8. [Contributing](#8-contributing)
+9. [Get in touch](#9-get-in-touch)
 
 ## 1 Installation
 
@@ -408,7 +409,51 @@ const hull = convexHull(vectors);
 
 The algorithms computation time is *O(n* log*n)* due to sorting.
 
-## 5 Testing
+## 5 Doubly-connected edge list
+
+For geometric tasks it often is required to compute the doubly-connected edge list
+containing all edges with its faces on the left and the right and the previous and
+the next edge.
+
+```typescript
+import { doublyConnectedEdgeList } from '@geometric/vector';
+```
+
+It requires all vectors to be 2-dimensional (having 2 entries).
+
+```typescript
+const vectors = [
+  new Vector(1, 0),
+  new Vector(1, 1),
+  new Vector(0, 1)
+];
+
+const edgeList = doublyConnectedEdgeList(vectors);
+```
+
+It will produce an array of `Nodes`. The order determines the polygon. The above
+setup will produce the following edge list.
+
+```json
+[
+  { edge: [ 0, 1 ],
+    start: [ 1, 0 ], end: [ 1, 1 ],
+    faceLeft: 'f1', faceRight: 'f2',
+    previous: 2, next: 1 },
+  { edge: [ -1, 0 ],
+    start: [ 1, 1 ], end: [ 0, 1 ],
+    faceLeft: 'f1', faceRight: 'f2',
+    previous: 0, next: 2 },
+  { edge: [ 1, -1 ],
+    start: [ 0, 1 ], end: [ 1, 0 ],
+    faceLeft: 'f1', faceRight: 'f2',
+    previous: 1, next: 0 }
+]
+```
+
+**Attention**: It currently does not implement intersections and have more than two faces.
+
+## 6 Testing
 
 Code quality is one of the most important things in computer
 science. Just the vector class has got [more than 50 tests](./test/vector.spec.ts).
@@ -417,7 +462,7 @@ This minimizes code quality issues, bugs and improves the controlled
 error-flow significantly. Pull requests should include tests
 for usual and edge cases as well.
 
-## 6 Roadmap
+## 7 Roadmap
 
 - Implement eigenvectors and eigenvalues
 - Implement doubly-connected edge list
@@ -425,11 +470,11 @@ for usual and edge cases as well.
 - Implement Delaunay triangulation
 - Implement polygon intersections
 
-## 7 Contributing
+## 8 Contributing
 
 Pull requests, issue reports and feature requests are very welcome.
 
-## 8 Get in touch
+## 9 Get in touch
 
 [![twitter](https://img.shields.io/badge/twitter-%40ngfelixl-blue.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ngfelixl)
 [![github](https://img.shields.io/badge/github-%40ngfelixl-blue.svg?logo=github)](https://github.com/ngfelixl)

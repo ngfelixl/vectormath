@@ -196,9 +196,9 @@ describe('matrix', () => {
     describe('scalar', () => {
       it('should be multiplicate scalar values', () => {
         const matrix = new Matrix(2, 3).from(test3x2);
-        
+
         const result = matrix.dot(2);
-  
+
         expect(result instanceof Matrix).to.be.true;
         expect(result).to.eql([
           [4, 8], [2, -2], [5, 2]
@@ -221,7 +221,7 @@ describe('matrix', () => {
         const matrix = new Matrix(3, 2).from(test3x2);
         const vector = new Vector(-1, 2);
         const result = matrix.dot(vector);
-  
+
         expect(result instanceof Vector).to.be.true;
         expect(result).to.eql([6, -3, -0.5]);
       });
@@ -251,16 +251,16 @@ describe('matrix', () => {
           [1, 2, 3],
           [-1, -1, 0]
         ]);
-  
+
         const matrix1 = new Matrix();
         matrix1.from([
           [1, 1],
           [1, 0],
           [0, -1]
         ]);
-  
+
         const result = matrix0.dot(matrix1);
-  
+
         expect(result).to.eql([[3, -2], [-2, -1]]);
       });
 
@@ -312,7 +312,7 @@ describe('matrix', () => {
     it('should throw an error if vector has invalid dimenions', () => {
       const matrix = new Matrix(2, 2);
       const vector = new Vector(3);
-      
+
       expect(() => { matrix.solve(vector); })
           .to.throw(new RegExp(`Vector has to be of size 2 but is 3`));
     });
