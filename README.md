@@ -347,7 +347,7 @@ const extraction = matrix.extract([1, 2], [2, 3]);
 To transpose the matrix you can use the `transpose` method. It
 swaps both dimensions.
 
-```
+```typescript
 const matrix = new Matrix().from([[1, 2], [3, 4], [5, 6]]);
 matrix.transpose();
 console.log(matrix); // [[1, 3, 5], [2, 4, 6]]
@@ -376,7 +376,7 @@ This also works with non-trivial cases. It returns `null` if no solution was fou
 
 The matrix diagonalization is based on **Gauss**-elimination. Use it as follows
 
-```
+```typescript
 const matrix = new Matrix().from([2, 3, 4], [1, 2, 3], [5, 6, 7]);
 matrix.diagonalize();
 console.log(matrix);  // [[x, y, z], [0, a, b], [0, 0, c]]
@@ -434,7 +434,7 @@ const edgeList = doublyConnectedEdgeList(vectors);
 It will produce an array of `Nodes`. The order determines the polygon. The above
 setup will produce the following edge list.
 
-```json
+```typescript
 [
   { edge: [ 0, 1 ],
     start: [ 1, 0 ], end: [ 1, 1 ],
