@@ -6,23 +6,28 @@ const ERROR_THRESHOLD = 0.000000000000001;
 describe('vector', () => {
   describe('instantiating and filling', () => {
     it('should create', () => {
-      let vector = new Vector();
+      const vector = new Vector();
       expect(vector).to.exist;
     });
-  
+
     it('should have the correct dimension', () => {
-      let vector = new Vector(0, 0, 0);
+      const vector = new Vector(0, 0, 0);
       expect(vector.length).to.equal(3);
     });
-  
+
     it('should be fillable with random numbers', () => {
       const vector = new Vector(2).random();
       expect(vector.distance).to.be.least(0).and.most(Math.sqrt(2));
     });
-  
+
     it('should be fillable with zeros', () => {
       const vector = new Vector(2).zeros();
       expect(vector).to.eql([0, 0]);
+    });
+
+    it('should be fillable with ones', () => {
+      const vector = new Vector(2).ones();
+      expect(vector).to.eql([1, 1]);
     });
   });
 
@@ -94,7 +99,7 @@ describe('vector', () => {
       const scalar = 4;
 
       const product = vector.dot(scalar);
-      
+
       expect(product).to.eql([4, 4]);
     });
 
@@ -163,7 +168,7 @@ describe('vector', () => {
 
       vector.rotate2D(Math.PI);
       vector.invert();
-      
+
       const error = [Math.abs(2 - vector[0]), Math.abs(3 - vector[1])];
 
       expect(error[0]).to.be.below(ERROR_THRESHOLD);
@@ -362,13 +367,13 @@ describe('vector', () => {
 
       expect(Math.PI / 2 - vector1.signedAngle(vector2)).to.be.below(ERROR_THRESHOLD);
       expect(Math.PI / 2 + vector1.signedAngle(vector4)).to.be.below(ERROR_THRESHOLD);
-      
+
       expect(Math.PI / 2 - vector2.signedAngle(vector3)).to.be.below(ERROR_THRESHOLD);
       expect(Math.PI / 2 + vector2.signedAngle(vector1)).to.be.below(ERROR_THRESHOLD);
-      
+
       expect(Math.PI / 2 - vector3.signedAngle(vector4)).to.be.below(ERROR_THRESHOLD);
       expect(Math.PI / 2 + vector3.signedAngle(vector2)).to.be.below(ERROR_THRESHOLD);
-    
+
       expect(Math.PI / 2 - vector4.signedAngle(vector1)).to.be.below(ERROR_THRESHOLD);
       expect(Math.PI / 2 + vector4.signedAngle(vector3)).to.be.below(ERROR_THRESHOLD);
     });

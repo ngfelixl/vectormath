@@ -33,12 +33,13 @@ This is an early stage, so it might be faced some API changes in the future.
     6. [Transpose](#36-transpose)
     7. [Solve system of linear equations](#37-system-of-linear-equations)
     8. [Diagonal matrices](#38-diagonal-matrices)
-4. [Convex Hull](#4-convex-hull)
-5. [Doubly-connected edge list](#5-doubly-connected-edge-list)
-6. [Testing](#6-testing)
-7. [Roadmap](#7-roadmap)
-8. [Contributing](#8-contributing)
-9. [Get in touch](#9-get-in-touch)
+4. [2D-Line Segment intersection](#2d-line-segment-intersection)
+5. [Convex Hull](#4-convex-hull)
+6. [Doubly-connected edge list](#5-doubly-connected-edge-list)
+7. [Testing](#6-testing)
+8. [Roadmap](#7-roadmap)
+9. [Contributing](#8-contributing)
+10. [Get in touch](#9-get-in-touch)
 
 ## 1 Installation
 
@@ -379,10 +380,34 @@ The matrix diagonalization is based on **Gauss**-elimination. Use it as follows
 ```typescript
 const matrix = new Matrix().from([2, 3, 4], [1, 2, 3], [5, 6, 7]);
 matrix.diagonalize();
-console.log(matrix);  // [[x, y, z], [0, a, b], [0, 0, c]]
+console.log(matrix);  // [[x, y, z], [0, a, b], [0, 0, c]];
 ```
 
-## 4 Convex Hull
+## 4 2D-line-segment intersection
+
+There is a helper function to detect the intersection of line-segments. Import
+it as follows
+
+```typescript
+import { intersection, Vector } from '@geometric/vector';
+```
+
+Define your line-segments. Here line segments are defined by a starting and an end
+point. The `intersection` function will return a point as a vector or `null` if
+there is no intersection between these line segments.
+
+```typescript
+const lineSegment1 = [new Vector(0, 0), new Vector(1, 1)];
+const lineSegment2 = [new Vector(1, 0), new Vector(0, 1)];
+
+const intersectionPoint = intersection(lineSegment1, lineSegment2);
+// [0.5, 0.5]
+```
+
+It will also return `null` if the intersection accurs on one of the starting or end points.
+This behavior might be changed until v1.0.
+
+## 5 Convex Hull
 
 The script also contains a helper function to detect the 2-dimensional
 convex hull out of a bunch of points (vectors). Import it
@@ -409,7 +434,7 @@ const hull = convexHull(vectors);
 
 The algorithms computation time is *O(n* log*n)* due to sorting.
 
-## 5 Doubly-connected edge list
+## 6 Doubly-connected edge list
 
 For geometric tasks it often is required to compute the doubly-connected edge list
 containing all edges with its faces on the left and the right and the previous and
@@ -453,7 +478,7 @@ setup will produce the following edge list.
 
 **Attention**: It currently does not implement intersections and have more than two faces.
 
-## 6 Testing
+## 7 Testing
 
 Code quality is one of the most important things in computer
 science. Just the vector class has got [more than 50 tests](./test/vector.spec.ts).
@@ -462,7 +487,7 @@ This minimizes code quality issues, bugs and improves the controlled
 error-flow significantly. Pull requests should include tests
 for usual and edge cases as well.
 
-## 7 Roadmap
+## 8 Roadmap
 
 - Implement eigenvectors and eigenvalues
 - Implement doubly-connected edge list
@@ -470,11 +495,11 @@ for usual and edge cases as well.
 - Implement Delaunay triangulation
 - Implement polygon intersections
 
-## 8 Contributing
+## 9 Contributing
 
 Pull requests, issue reports and feature requests are very welcome.
 
-## 9 Get in touch
+## 10 Get in touch
 
 [![twitter](https://img.shields.io/badge/twitter-%40ngfelixl-blue.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ngfelixl)
 [![github](https://img.shields.io/badge/github-%40ngfelixl-blue.svg?logo=github)](https://github.com/ngfelixl)
