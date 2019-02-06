@@ -1,4 +1,4 @@
-import { Vector } from "./vector";
+import { Vector } from './vector';
 
 /**
  * ## Matrix
@@ -25,7 +25,7 @@ export class Matrix extends Array<Vector> {
     super();
 
     if (x && y) {
-      for(let i = 0; i < x; i++) {
+      for (let i = 0; i < x; i++) {
         this[i] = new Vector(y);
       }
     }
@@ -55,7 +55,7 @@ export class Matrix extends Array<Vector> {
   from(matrix: Vector[] | Matrix | number[][]) {
     this.splice(0, this.length);
 
-    for(const row of matrix) {
+    for (const row of matrix) {
       const vec = new Vector(row.length).from(row);
       this.push(vec);
     }
@@ -76,7 +76,7 @@ export class Matrix extends Array<Vector> {
 
       this.splice(0, this.length);
 
-      for(let i = 0; i < size; i++) {
+      for (let i = 0; i < size; i++) {
         const vector = new Vector(size).fill(0);
         vector[i] = 1;
         this.push(vector);
@@ -99,8 +99,18 @@ export class Matrix extends Array<Vector> {
    * Fill the entire matrix with zeros
    */
   zeros() {
-    for(const row of this) {
+    for (const row of this) {
       row.zeros();
+    }
+    return this;
+  }
+
+  /**
+   * Fill the entire matrix with zeros
+   */
+  ones() {
+    for (const row of this) {
+      row.ones();
     }
     return this;
   }
@@ -109,7 +119,7 @@ export class Matrix extends Array<Vector> {
    * Fill the entire matrix with random numbers.
    */
   random() {
-    for(const row of this) {
+    for (const row of this) {
       row.random();
     }
     return this;
@@ -159,7 +169,7 @@ export class Matrix extends Array<Vector> {
    * @param vector
    */
   solve(vector: Vector): Vector | null {
-    if (vector.length !== this.shape[1]) {
+    if (!(vector instanceof Vector) || vector.length !== this.shape[1]) {
       throw new Error(`Vector has to be of size ${this.shape[1]} but is ${vector.length}`);
     }
     const det = this.determinant;
@@ -171,7 +181,12 @@ export class Matrix extends Array<Vector> {
         temp.transpose();
         temp[i].from(vector);
         temp.transpose();
-        determinants[i] = temp.determinant;
+        const determinant = temp.determinant;
+        if (determinant) {
+          determinants[i] = determinant;
+        } else {
+          return null;
+        }
       }
 
       determinants = determinants.dot(1 / det) as Vector;
@@ -225,7 +240,6 @@ export class Matrix extends Array<Vector> {
     return this._determinant(this);
   }
 
-
   /**
    * Returns a part of the matrix
    */
@@ -253,7 +267,7 @@ export class Matrix extends Array<Vector> {
     if (matrix.length > 2) {
       let determinant = 0;
       for (let i = 0; i < matrix.shape[1]; i++) {
-        determinant += ((i + 1)%2*2 - 1) * matrix[0][i] * this._determinant(this.removeEntries(matrix, 0, i));
+        determinant += (((i + 1) % 2) * 2 - 1) * matrix[0][i] * this._determinant(this.removeEntries(matrix, 0, i));
       }
       return determinant;
     } else {
@@ -261,12 +275,15 @@ export class Matrix extends Array<Vector> {
     }
   }
 
+  /**
+   * Returns the matrix with row x and column y removed
+   */
   private removeEntries(matrix: Matrix, x: number, y: number): Matrix {
     const result = new Matrix().from(matrix);
 
     result.splice(x, 1);
 
-    for(const row of result) {
+    for (const row of result) {
       row.splice(y, 1);
     }
     return result;
@@ -301,7 +318,7 @@ export class Matrix extends Array<Vector> {
 
     const result = new Vector();
 
-    for(const row of this) {
+    for (const row of this) {
       result.push(row.dot(vector) as number);
     }
 
@@ -311,7 +328,7 @@ export class Matrix extends Array<Vector> {
   private scalarMultiplication(scalar: number): Matrix {
     const matrix = new Matrix(this.shape[0], this.shape[1]);
     for (let i = 0; i < this.length; i++) {
-      matrix[i] = (this[i].dot(scalar) as Vector);
+      matrix[i] = this[i].dot(scalar) as Vector;
     }
     return matrix;
   }
@@ -338,9 +355,11 @@ export class Matrix extends Array<Vector> {
   private validate() {
     if (this.length > 0) {
       const yShape = this[0].length;
-      for(const row of this) {
+      for (const row of this) {
         if (yShape !== row.length) {
-          throw new Error(`Your matrix is broken, it contains rows with different dimensions: ${yShape} and ${row.length}`);
+          throw new Error(
+            `Your matrix is broken, it contains rows with different dimensions: ${yShape} and ${row.length}`,
+          );
         }
       }
     }

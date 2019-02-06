@@ -27,6 +27,15 @@ describe('matrix', () => {
       ]);
     });
 
+    it('should be fillable with zeros', () => {
+      const matrix = new Matrix(2, 3).ones();
+
+      expect(matrix).to.eql([
+        [1, 1, 1],
+        [1, 1, 1]
+      ]);
+    });
+
     it('should return a [0,0] shape if it has no rows', () => {
       const matrix = new Matrix();
 
@@ -320,6 +329,15 @@ describe('matrix', () => {
     it('should return NULL if system is not solvable', () => {
       const matrix = new Matrix(2, 2).zeros();
       const vector = new Vector(2).random();
+
+      const solution = matrix.solve(vector);
+
+      expect(solution).to.be.null;
+    });
+
+    it('should return NULL if it is not computable (e.g. null-vector)', () => {
+      const matrix = new Matrix().from([[1, 2], [3, 4]]);
+      const vector = new Vector(2).zeros();
 
       const solution = matrix.solve(vector);
 

@@ -69,6 +69,16 @@ export class Vector extends Array<number> {
   }
 
   /**
+   * Fill the entire vector with zeros.
+   */
+  ones() {
+    for (let i = 0; i < this.length; i++) {
+      this[i] = 1;
+    }
+    return this;
+  }
+
+  /**
    * Fill the entire vectors with randomly generated values
    * in [0, 1]. Use in combination with `.normalize()` to
    * get a normalized random vector.

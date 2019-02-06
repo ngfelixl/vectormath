@@ -7,8 +7,7 @@
     "no-console": false,
     "interface-name": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": false
-  },
-  "linterOptions": {
+    "ordered-imports": false,
+    "trailing-comma": true
   }
 }
