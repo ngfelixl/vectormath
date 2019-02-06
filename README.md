@@ -33,13 +33,13 @@ This is an early stage, so it might be faced some API changes in the future.
     6. [Transpose](#36-transpose)
     7. [Solve system of linear equations](#37-system-of-linear-equations)
     8. [Diagonal matrices](#38-diagonal-matrices)
-4. [2D-Line Segment intersection](#2d-line-segment-intersection)
-5. [Convex Hull](#4-convex-hull)
-6. [Doubly-connected edge list](#5-doubly-connected-edge-list)
-7. [Testing](#6-testing)
-8. [Roadmap](#7-roadmap)
-9. [Contributing](#8-contributing)
-10. [Get in touch](#9-get-in-touch)
+4. [2D-Line Segment intersection](#4-2d-line-segment-intersection)
+5. [Convex Hull](#5-convex-hull)
+6. [Doubly-connected edge list](#6-doubly-connected-edge-list)
+7. [Testing](#7-testing)
+8. [Roadmap](#8-roadmap)
+9. [Contributing](#9-contributing)
+10. [Get in touch](#10-get-in-touch)
 
 ## 1 Installation
 
@@ -476,7 +476,9 @@ setup will produce the following edge list.
 ]
 ```
 
-**Attention**: It currently does not implement intersections and have more than two faces.
+**Attention**: It currently checks for intersections with prior added edges. If an intersection
+occurs it will return `null`. This will be changed in the future, as it simply should result in
+an additional face.
 
 ## 7 Testing
 
