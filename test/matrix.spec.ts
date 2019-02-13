@@ -1,5 +1,4 @@
 import { Matrix, Vector } from '../src/index';
-import { expect } from 'chai';
 
 const ERROR_THRESHOLD = 0.000000000000001;
 const test3x2 = [
@@ -10,18 +9,18 @@ describe('matrix', () => {
   describe('instantiation and filling', () => {
     it('should create', () => {
       const matrix = new Matrix(2, 4);
-      expect(matrix).to.exist;
+      expect(matrix).toBeTruthy;
     });
 
     it('should be correctly shaped', () => {
       const matrix = new Matrix(2, 3);
-      expect(matrix.shape).to.eql([2, 3]);
+      expect(matrix.shape).toEqual([2, 3]);
     });
 
     it('should be fillable with zeros', () => {
       const matrix = new Matrix(2, 3).zeros();
 
-      expect(matrix).to.eql([
+      expect(matrix).toEqual([
         [0, 0, 0],
         [0, 0, 0]
       ]);
@@ -30,7 +29,7 @@ describe('matrix', () => {
     it('should be fillable with zeros', () => {
       const matrix = new Matrix(2, 3).ones();
 
-      expect(matrix).to.eql([
+      expect(matrix).toEqual([
         [1, 1, 1],
         [1, 1, 1]
       ]);
@@ -39,16 +38,20 @@ describe('matrix', () => {
     it('should return a [0,0] shape if it has no rows', () => {
       const matrix = new Matrix();
 
-      expect(matrix.shape).to.eql([0, 0]);
+      expect(matrix.shape).toEqual([0, 0]);
     });
 
     it('should be randomly fillable', () => {
       const matrix = new Matrix(2, 2).random();
 
-      expect(matrix[0][0]).to.gte(0).and.lte(1);
-      expect(matrix[0][1]).to.gte(0).and.lte(1);
-      expect(matrix[1][0]).to.gte(0).and.lte(1);
-      expect(matrix[1][1]).to.gte(0).and.lte(1);
+      expect(matrix[0][0]).toBeGreaterThanOrEqual(0)
+      expect(matrix[0][0]).toBeLessThanOrEqual(1);
+      expect(matrix[0][1]).toBeGreaterThanOrEqual(0);
+      expect(matrix[0][1]).toBeLessThanOrEqual(1);
+      expect(matrix[1][0]).toBeGreaterThanOrEqual(0);
+      expect(matrix[1][0]).toBeLessThanOrEqual(1);
+      expect(matrix[1][1]).toBeGreaterThanOrEqual(0);
+      expect(matrix[1][1]).toBeLessThanOrEqual(1);
     });
 
     it('should throw an error if one of the rows was transformed manually', () => {
@@ -57,13 +60,13 @@ describe('matrix', () => {
       matrix[0][2] = 1;
 
       expect(() => { matrix.shape; })
-          .to.throw(new RegExp(`Your matrix is broken, it contains rows with different dimensions: 3 and 2`));
+          .toThrow(new RegExp(`Your matrix is broken, it contains rows with different dimensions: 3 and 2`));
     });
 
     it('should do nothing when from parameter is an empty array', () => {
       const matrix = new Matrix().from([]);
 
-      expect(matrix.shape).to.eql([0, 0]);
+      expect(matrix.shape).toEqual([0, 0]);
     });
   });
 
@@ -73,7 +76,7 @@ describe('matrix', () => {
 
       matrix.transpose();
 
-      expect(matrix.shape).to.eql([5, 2]);
+      expect(matrix.shape).toEqual([5, 2]);
     });
 
     it('should transpose with values', () => {
@@ -81,8 +84,8 @@ describe('matrix', () => {
       matrix.from([[1, 2, 3]]);
 
       matrix.transpose();
-      expect(matrix).to.eql([[1], [2], [3]]);
-      expect(matrix.shape).to.eql([3, 1]);
+      expect(matrix).toEqual([[1], [2], [3]]);
+      expect(matrix.shape).toEqual([3, 1]);
     });
   });
 
@@ -97,21 +100,21 @@ describe('matrix', () => {
       const matrix = new Matrix();
 
       expect(() => { matrix.identity(0.5); })
-          .to.throw(new RegExp('Size must be a positive integer value'));
+          .toThrow(new RegExp('Size must be a positive integer value'));
     });
 
     it('should create a 3D identity matrix from existing', () => {
       const matrix = new Matrix(3, 3).zeros();
       matrix.identity();
 
-      expect(matrix).to.eql([[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
+      expect(matrix).toEqual([[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
     });
 
     it('should throw an error if matrix not NxN-shaped', () => {
       const matrix = new Matrix().from(test3x2);
 
       expect(() => { matrix.identity(); })
-          .to.throw(new RegExp('Matrix has to be NxN shaped'));
+          .toThrow(new RegExp('Matrix has to be NxN shaped'));
     });
   });
 
@@ -121,7 +124,7 @@ describe('matrix', () => {
 
       const determinant = matrix.determinant;
 
-      expect(determinant).to.equal(1 * -4 - 2 * 2);
+      expect(determinant).toBe(1 * -4 - 2 * 2);
     });
 
     it('should calculate the 3d-determinant', () => {
@@ -133,7 +136,7 @@ describe('matrix', () => {
 
       const determinant = matrix.determinant;
 
-      expect(determinant).to.equal(8 + 0 -16 - 4 + 8 - 0);
+      expect(determinant).toBe(8 + 0 -16 - 4 + 8 - 0);
     });
 
     it('should calculate the 4d-determinant', () => {
@@ -146,13 +149,13 @@ describe('matrix', () => {
 
       const determinant = matrix.determinant;
 
-      expect(determinant).to.equal(105);
+      expect(determinant).toBe(105);
     });
 
     it('should throw an error if matrix is not NxN shaped', () => {
       const matrix = new Matrix(2, 3);
 
-      expect(() => { matrix.determinant; }).to.throw(new RegExp(`Determinants require matrices having shape NxN`));
+      expect(() => { matrix.determinant; }).toThrow(new RegExp(`Determinants require matrices having shape NxN`));
     });
   });
 
@@ -163,13 +166,13 @@ describe('matrix', () => {
         [1, -9]
       ]);
 
-      expect(matrix.trace).to.equal(-7);
+      expect(matrix.trace).toBe(-7);
     });
 
     it('should throw an error if matrix is not NxN shaped', () => {
       const matrix = new Matrix(2, 3);
 
-      expect(() => { matrix.trace }).to.throw(new RegExp('Trace requires a NxN matrix'));
+      expect(() => { matrix.trace }).toThrow(new RegExp('Trace requires a NxN matrix'));
     });
   });
 
@@ -183,14 +186,14 @@ describe('matrix', () => {
 
       const extraction = matrix.extract([1, 2], [2, 3]);
 
-      expect(extraction).to.eql([[2, 9], [2, -4]]);
+      expect(extraction).toEqual([[2, 9], [2, -4]]);
     });
 
     it('should throw an error when indices out of bounds', () => {
       const matrix = new Matrix(2, 2);
 
       expect(() => { matrix.extract([1, 2], [2, 3]) })
-          .to.throw(new RegExp(`Range out of bounds. Matrix shape is 2,2. Ranges are 1,2 and 2,3`));
+          .toThrow(new RegExp(`Range out of bounds. Matrix shape is 2,2. Ranges are 1,2 and 2,3`));
     });
   });
 
@@ -199,7 +202,7 @@ describe('matrix', () => {
       const matrix = new Matrix(2, 2).zeros();
 
       expect(() => { matrix.dot('string' as any); })
-          .to.throw(new RegExp(`Multiplication requires a Vector, a Matrix or a number as parameter`))
+          .toThrow(new RegExp(`Multiplication requires a Vector, a Matrix or a number as parameter`))
     });
 
     describe('scalar', () => {
@@ -208,8 +211,8 @@ describe('matrix', () => {
 
         const result = matrix.dot(2);
 
-        expect(result instanceof Matrix).to.be.true;
-        expect(result).to.eql([
+        expect(result instanceof Matrix).toBeTruthy;
+        expect(result).toEqual([
           [4, 8], [2, -2], [5, 2]
         ]);
       });
@@ -219,7 +222,7 @@ describe('matrix', () => {
 
         const result = matrix.dot(0.5);
 
-        expect(result).to.eql([
+        expect(result).toEqual([
           [1, 2], [0.5, -0.5], [1.25, 0.5]
         ]);
       });
@@ -231,8 +234,8 @@ describe('matrix', () => {
         const vector = new Vector(-1, 2);
         const result = matrix.dot(vector);
 
-        expect(result instanceof Vector).to.be.true;
-        expect(result).to.eql([6, -3, -0.5]);
+        expect(result instanceof Vector).toBeTruthy;
+        expect(result).toEqual([6, -3, -0.5]);
       });
 
       it('should throw an error if vector has wrong dimensions', () => {
@@ -240,7 +243,7 @@ describe('matrix', () => {
         const vector = new Vector(4).zeros();
 
         expect(() => { matrix.dot(vector); })
-            .to.throw(new RegExp(`Matrix-vector multiplication requires the dimensions to be`));
+            .toThrow(new RegExp(`Matrix-vector multiplication requires the dimensions to be`));
       });
 
       it('should multiplicate an empty matrix and an empty vector', () => {
@@ -249,7 +252,7 @@ describe('matrix', () => {
 
         const result = matrix.dot(vector);
 
-        expect(result.length).to.equal(3);
+        expect(result.length).toBe(3);
       });
     });
 
@@ -270,7 +273,7 @@ describe('matrix', () => {
 
         const result = matrix0.dot(matrix1);
 
-        expect(result).to.eql([[3, -2], [-2, -1]]);
+        expect(result).toEqual([[3, -2], [-2, -1]]);
       });
 
       it('should throw an error if matrix dimensions are invalid', () => {
@@ -278,7 +281,7 @@ describe('matrix', () => {
         const matrix1 = new Matrix(4, 5);
 
         expect(() => { matrix0.dot(matrix1); })
-            .to.throw(new RegExp('Matrix shapes invalid.'));
+            .toThrow(new RegExp('Matrix shapes invalid.'));
       });
 
       it('should multiplicate empty matrices', () => {
@@ -287,7 +290,7 @@ describe('matrix', () => {
 
         const matrix = matrix0.dot(matrix1);
 
-        expect(matrix.shape).to.eql([2, 5]);
+        expect(matrix.shape).toEqual([2, 5]);
       });
     });
   });
@@ -298,7 +301,7 @@ describe('matrix', () => {
       const vector = new Vector(1, 2, 3);
       const solution = matrix.solve(vector);
 
-      expect(solution).to.eql([1, 2, 3]);
+      expect(solution).toEqual([1, 2, 3]);
     });
 
     it('should solve the test 2d linear system of equations', () => {
@@ -309,12 +312,12 @@ describe('matrix', () => {
       const vector = new Vector(0.5, -1);
 
       const solution = matrix.solve(vector);
-      expect(solution).to.exist;
+      expect(solution).toBeTruthy;
 
       if (solution) {
         const error = [Math.abs(solution[0] - 0.55), Math.abs(solution[1] + 0.15)];
-        expect(error[0]).to.lessThan(ERROR_THRESHOLD);
-        expect(error[1]).to.lessThan(ERROR_THRESHOLD);
+        expect(error[0]).toBeLessThan(ERROR_THRESHOLD);
+        expect(error[1]).toBeLessThan(ERROR_THRESHOLD);
       }
     });
 
@@ -323,7 +326,7 @@ describe('matrix', () => {
       const vector = new Vector(3);
 
       expect(() => { matrix.solve(vector); })
-          .to.throw(new RegExp(`Vector has to be of size 2 but is 3`));
+          .toThrow(new RegExp(`Vector has to be of size 2 but is 3`));
     });
 
     it('should return NULL if system is not solvable', () => {
@@ -332,7 +335,7 @@ describe('matrix', () => {
 
       const solution = matrix.solve(vector);
 
-      expect(solution).to.be.null;
+      expect(solution).toBeNull;
     });
 
     it('should return NULL if it is not computable (e.g. null-vector)', () => {
@@ -341,7 +344,7 @@ describe('matrix', () => {
 
       const solution = matrix.solve(vector);
 
-      expect(solution).to.be.null;
+      expect(solution).toBeNull;
     });
   });
 
@@ -355,15 +358,15 @@ describe('matrix', () => {
       const matrix = new Matrix().from(data);
       matrix.diagonalize();
 
-      expect(matrix).to.eql(data);
+      expect(matrix).toEqual(data);
     });
 
     it('should diagonalize a 3x2 matrix', () => {
       const matrix = new Matrix().from(test3x2);
       matrix.diagonalize();
-      expect(matrix[1][0]).to.equal(0);
-      expect(matrix[2][0]).to.equal(0);
-      expect(matrix[2][1]).to.equal(0);
+      expect(matrix[1][0]).toBe(0);
+      expect(matrix[2][0]).toBe(0);
+      expect(matrix[2][1]).toBe(0);
     });
   });
 });

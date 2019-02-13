@@ -1,6 +1,5 @@
 import { Vector } from '../src/vector';
 import { doublyConnectedEdgeList } from '../src/index';
-import { expect } from 'chai';
 
 describe('doubly-connected-edge-list', () => {
   it('should compute the double connected edge list for 3 vectors', () => {
@@ -12,7 +11,7 @@ describe('doubly-connected-edge-list', () => {
 
     const edgeList = doublyConnectedEdgeList(vectors);
 
-    expect(edgeList).to.eql([
+    expect(edgeList).toEqual([
       { edge: [ 0, 1 ],
         start: [ 1, 0 ],
         end: [ 1, 1 ],
@@ -48,7 +47,7 @@ describe('doubly-connected-edge-list', () => {
 
     const edgeList = doublyConnectedEdgeList(vectors);
 
-    expect(edgeList).to.eql([
+    expect(edgeList).toEqual([
       { edge: [ 0, 1 ],
         start: [ 1, 0 ],
         end: [ 1, 1 ],
@@ -90,7 +89,7 @@ describe('doubly-connected-edge-list', () => {
 
     const edgeList = doublyConnectedEdgeList(vectors);
 
-    expect(edgeList).to.eql([
+    expect(edgeList).toEqual([
       { edge: [ 1, 0 ],
         start: [ -2, -1 ],
         end: [ -1, -1 ],
@@ -122,7 +121,7 @@ describe('doubly-connected-edge-list', () => {
     ];
 
     expect(() => { doublyConnectedEdgeList(vectors); })
-        .to.throw(new RegExp('Vectors must be 2-dimensional'));
+        .toThrow(new RegExp('Vectors must be 2-dimensional'));
   });
 
   it('should return null if there is an intersection', () => {
@@ -135,6 +134,6 @@ describe('doubly-connected-edge-list', () => {
 
     const list = doublyConnectedEdgeList(vectors);
 
-    expect(list).to.be.null;
+    expect(list).toBeFalsy;
   });
 });

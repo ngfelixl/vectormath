@@ -1,5 +1,4 @@
 import { intersection, Vector } from '../src/index';
-import { expect } from 'chai';
 
 describe('intersection', () => {
   it('should return [0.5, 0.5] as intersection point for [0,0]->[1,1], [0,1]->[1,0]', () => {
@@ -8,7 +7,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.eql([0.5, 0.5]);
+    expect(point).toEqual([0.5, 0.5]);
   });
 
   it('should return [0, 0] as intersection point for [-1,-1]->[1,1], [-1,1]->[1,-1]', () => {
@@ -17,7 +16,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.eql([0, 0]);
+    expect(point).toEqual([0, 0]);
   });
 
   it('should return [0.5, 0] as intersection point for [0,0]->[1,0], [1,1]->[0,-1]', () => {
@@ -26,7 +25,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.eql([0.5, 0]);
+    expect(point).toEqual([0.5, 0]);
   });
 
   it('should return [0.5, 0] as intersection point for [1,1]->[0,-1] and [0,0]->[1,0]', () => {
@@ -36,7 +35,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.eql([0.5, 0]);
+    expect(point).toEqual([0.5, 0]);
   })
 
   it('should return null for non-intersecting segments', () => {
@@ -45,7 +44,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.be.null;
+    expect(point).toBeNull;
   });
 
   it('should return null if intersecting not between these points', () => {
@@ -54,7 +53,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.be.null;
+    expect(point).toBeNull;
   });
 
   it('should return null if starting point is the intersection', () => {
@@ -63,7 +62,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.be.null;
+    expect(point).toBeNull;
   });
 
   it('should return null if end point is the intersection', () => {
@@ -72,7 +71,7 @@ describe('intersection', () => {
 
     const point = intersection(segment0, segment1);
 
-    expect(point).to.be.null;
+    expect(point).toBeNull;
   });
 
   it('should return return an Error for 3D inputs', () => {
@@ -80,21 +79,21 @@ describe('intersection', () => {
     const segment1: [Vector, Vector] = [new Vector(0, 0.5, 0.5), new Vector(1, 0.5, 0.5)];
 
     expect(() => { intersection(segment0, segment1); })
-        .to.throw(new RegExp(`To compute the 2 dimensional intersection`));
+        .toThrow(new RegExp(`To compute the 2 dimensional intersection`));
   });
 
   it('should return an error if input is empty', () => {
     expect(() => { intersection(undefined as any, null as any); })
-        .to.throw(new RegExp(`Intersection requires Vectors as input`));
+        .toThrow(new RegExp(`Intersection requires Vectors as input`));
   });
 
   it('should return an error if input is empty', () => {
     expect(() => { intersection(new Array<Vector>() as any, new Array<Vector>() as any); })
-        .to.throw(new RegExp(`To compute the 2 dimensional intersection, 2 dimensional vectors are required`));
+        .toThrow(new RegExp(`To compute the 2 dimensional intersection, 2 dimensional vectors are required`));
   });
 
   it('should return an error if input is string', () => {
     expect(() => { intersection('fjdskjsd' as any, null as any); })
-        .to.throw(new RegExp(`Intersection requires Vectors as input`));
+        .toThrow(new RegExp(`Intersection requires Vectors as input`));
   });
 });
