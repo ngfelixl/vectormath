@@ -133,8 +133,8 @@ export class Matrix extends Array<Vector> {
    * it.
    * @param multiplicator
    */
-  dot<T extends Vector | Matrix | number>(multiplicator: T): T extends Vector ? Vector : Matrix;
-  dot<T extends Vector | Matrix | number>(multiplicator: T): Vector | Matrix {
+  dot<T = Vector | Matrix | number>(multiplicator: T): T extends Vector ? Vector : Matrix;
+  dot<T = Vector | Matrix | number>(multiplicator: T): Vector | Matrix {
     if (multiplicator instanceof Vector) {
       return this.vectorMultiplication(multiplicator);
     } else if (multiplicator instanceof Matrix) {
