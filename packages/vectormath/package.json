@@ -1,0 +1,19 @@
+{
+  "name": "@geometric/vectormath",
+  "version": "1.0.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngfelixl/vectormath.git"
+  },
+  "keywords": [
+    "math",
+    "vector",
+    "array"
+  ],
+  "author": "Felix Lemke <flemke.dev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngfelixl/vectormath/issues"
+  },
+  "homepage": "https://github.com/ngfelixl/vectormath#readme"
+}

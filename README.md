@@ -89,7 +89,7 @@ length, e.g. `new Vector(10)` will be a 10-dimensional empty
 vector. To fill it with values you can use the following items.
 
 ```typescript
-const vector = new Vector(20)
+const vector = new Vector(20);
 vector.zeros();
 vector.random();
 vector.fill(4);
@@ -111,8 +111,8 @@ style. Also it is possible to print the vector like
 
 ```typescript
 const vector = new Vector(1, 3, 4);
-console.log(vector.length);     // 3
-console.log(vector);            // [1, 3, 4]
+console.log(vector.length); // 3
+console.log(vector); // [1, 3, 4]
 ```
 
 ### 2.3 Distance
@@ -183,13 +183,13 @@ To add a vector or a scalar to a vector you can use the build-in
 or a vector.
 
 ```typescript
-const left  = new Vector(2, 4, 0);
+const left = new Vector(2, 4, 0);
 const right = new Vector(-3, 1, 2);
 const vec1 = new Vector(1).fill(10);
 
-const vectorSum = left.add(right);     // []
-const scalarSum = left.add(5);         //
-const vec1Sum   = left.add(scalarVec); // 
+const vectorSum = left.add(right); // []
+const scalarSum = left.add(5); //
+const vec1Sum = left.add(scalarVec); //
 ```
 
 Vector-vector addition requires the vectors to have the same
@@ -207,8 +207,8 @@ it returns the scaled vector.
 const vector1 = new Vector(1, -2, 3);
 const vector2 = new Vector(2, 4, -1);
 
-const scalar = vector1.dot(vector2);  // -11
-const vector = vector1.dot(2);        // [2, -4, 6]
+const scalar = vector1.dot(vector2); // -11
+const vector = vector1.dot(2); // [2, -4, 6]
 ```
 
 The next type of multiplication is the `cross` product. This type of
@@ -218,7 +218,7 @@ multiplication is only available for 3-dimensional vectors (or in theory 7D).
 const vector1 = new Vector(1, 0, 0);
 const vector2 = new Vector(0, 1, 0);
 
-const vector = vector1.cross(vector2);  // [0, 0, 1]
+const vector = vector1.cross(vector2); // [0, 0, 1]
 ```
 
 The last multiplication is the element-wise multiplication / division. For this purpose
@@ -232,7 +232,7 @@ by an angle [radians]. This operation is chainable.
 
 ```typescript
 const vector = new Vector(1, 0);
-vector.rotate2D(Math.PI);     // [-1, 0];
+vector.rotate2D(Math.PI); // [-1, 0];
 ```
 
 It uses the 2D rotation matrix.
@@ -251,7 +251,7 @@ as elements. It provides several helper classes and build in integrity
 checks. You can instantiate an empty matrix without any arguments.
 
 ```typescript
-const matrix = new Matrix()
+const matrix = new Matrix();
 ```
 
 or with shape arguments. E.g. passing in 2 and 3 generates a
@@ -277,11 +277,15 @@ shape you can use
 ```typescript
 const matrix1 = new Matrix(3, 4);
 const matrix2 = new Matrix().identity(2);
-const matrix3 = new Matrix().from([[0, 1], [1, 0], [-1, 0]]);
+const matrix3 = new Matrix().from([
+  [0, 1],
+  [1, 0],
+  [-1, 0],
+]);
 
-console.log(matrix1.shape);  // [3, 4]
-console.log(matrix2.shape);  // [2, 2]
-console.log(matrix3.shape);  // [3, 2]
+console.log(matrix1.shape); // [3, 4]
+console.log(matrix2.shape); // [2, 2]
+console.log(matrix3.shape); // [3, 2]
 ```
 
 ### 3.2 Multiplication
@@ -294,9 +298,9 @@ it is a matrix-vector multiplication) or a matrix. Imagine the following setup
 ```typescript
 const matrix = new Matrix().from([
   [2, 1, -1],
-  [1, 0.5, 2]
+  [1, 0.5, 2],
 ]);
-const zeros  = new Matrix(3, 4).zeros()
+const zeros = new Matrix(3, 4).zeros();
 const vector = new Vector(1, 2, 3);
 const scalar = 4;
 ```
@@ -306,7 +310,7 @@ Can be used as follows
 ```typescript
 const matvec = matrix.dot(vector); // Vector [1, 8]
 const matnum = matrix.dot(scalar); // Matrix [[8, 4, -4], [4, 2, 8]]
-const matmat = matrix.dot(zeros);  // Matrix 2x4 filled with zeroes
+const matmat = matrix.dot(zeros); // Matrix 2x4 filled with zeroes
 ```
 
 ### 3.3 Determinant
@@ -315,7 +319,7 @@ Computes the determinant of the n-dimensional, equally shaped matrix.
 
 ```typescript
 const matrix = new Matrix().identity(3);
-const determinant = matrix.determinant;  // 3
+const determinant = matrix.determinant; // 3
 ```
 
 ### 3.4 Trace
@@ -324,8 +328,11 @@ Computes the trace (the sum over all diagonal entries)
 of the n-dimensional, equally shaped matrix.
 
 ```typescript
-const matrix = new Matrix().from([[2, 3], [-1, -4]]);
-const trace = matrix.trace;  // -2
+const matrix = new Matrix().from([
+  [2, 3],
+  [-1, -4],
+]);
+const trace = matrix.trace; // -2
 ```
 
 ### 3.5 Submatrix extraction
@@ -337,7 +344,7 @@ upper x-range indices and lower and upper y-range indices.
 const matrix = new Matrix().from([
   [3, 4, 1, 5],
   [0, 1, 2, 9],
-  [-1, 0, 2, -4]
+  [-1, 0, 2, -4],
 ]);
 
 const extraction = matrix.extract([1, 2], [2, 3]);
@@ -350,7 +357,11 @@ To transpose the matrix you can use the `transpose` method. It
 swaps both dimensions.
 
 ```typescript
-const matrix = new Matrix().from([[1, 2], [3, 4], [5, 6]]);
+const matrix = new Matrix().from([
+  [1, 2],
+  [3, 4],
+  [5, 6],
+]);
 matrix.transpose();
 console.log(matrix); // [[1, 3, 5], [2, 4, 6]]
 ```
@@ -363,13 +374,13 @@ The matrix class is also able to solve systems of linear equations.
 Ax = b
 ```
 
-where *A* is the matrix, *b* is the result (vector) and *x* is the vector we
+where _A_ is the matrix, _b_ is the result (vector) and _x_ is the vector we
 want to compute.
 
 ```typescript
 const matrix = new Matrix().identity(3);
 const vector = new Vector(-1, 2, -3);
-const result = matrix.solve(vector);  // [-1, 2, -3]
+const result = matrix.solve(vector); // [-1, 2, -3]
 ```
 
 This also works with non-trivial cases. It returns `null` if no solution was found.
@@ -381,7 +392,7 @@ The matrix diagonalization is based on **Gauss**-elimination. Use it as follows
 ```typescript
 const matrix = new Matrix().from([2, 3, 4], [1, 2, 3], [5, 6, 7]);
 matrix.diagonalize();
-console.log(matrix);  // [[x, y, z], [0, a, b], [0, 0, c]];
+console.log(matrix); // [[x, y, z], [0, a, b], [0, 0, c]];
 ```
 
 ## 4 2D-line-segment intersection
@@ -417,7 +428,7 @@ convex hull out of a bunch of points (vectors). Import it
 import { convexHull } from '@geometric/vector';
 ```
 
-The convex-hull sorts the points by *x*-coordinate, or *y*-coordinate if
+The convex-hull sorts the points by _x_-coordinate, or _y_-coordinate if
 equal, ascending. Afterwards it calculates the upper hull and then the lower
 hull. In the end both hulls will be merged. This is an example for 20 randomly
 created 2-dimensional vectors.
@@ -426,14 +437,14 @@ created 2-dimensional vectors.
 // Create an array of 20 2-dimensional vectors
 const vectors: Vector[] = [];
 for (let i = 0; i < 20; i++) {
-    vectors.push(new Vector(2).random());
+  vectors.push(new Vector(2).random());
 }
 
 // Determine the complex hull
 const hull = convexHull(vectors);
 ```
 
-The algorithms computation time is *O(n* log*n)* due to sorting.
+The algorithms computation time is _O(n_ log*n)* due to sorting.
 
 ## 6 Doubly-connected edge list
 
@@ -448,11 +459,7 @@ import { doublyConnectedEdgeList } from '@geometric/vector';
 It requires all vectors to be 2-dimensional (having 2 entries).
 
 ```typescript
-const vectors = [
-  new Vector(1, 0),
-  new Vector(1, 1),
-  new Vector(0, 1)
-];
+const vectors = [new Vector(1, 0), new Vector(1, 1), new Vector(0, 1)];
 
 const edgeList = doublyConnectedEdgeList(vectors);
 ```
@@ -462,19 +469,34 @@ setup will produce the following edge list.
 
 ```typescript
 [
-  { edge: [ 0, 1 ],
-    start: [ 1, 0 ], end: [ 1, 1 ],
-    faceLeft: 'f1', faceRight: 'f2',
-    previous: 2, next: 1 },
-  { edge: [ -1, 0 ],
-    start: [ 1, 1 ], end: [ 0, 1 ],
-    faceLeft: 'f1', faceRight: 'f2',
-    previous: 0, next: 2 },
-  { edge: [ 1, -1 ],
-    start: [ 0, 1 ], end: [ 1, 0 ],
-    faceLeft: 'f1', faceRight: 'f2',
-    previous: 1, next: 0 }
-]
+  {
+    edge: [0, 1],
+    start: [1, 0],
+    end: [1, 1],
+    faceLeft: 'f1',
+    faceRight: 'f2',
+    previous: 2,
+    next: 1,
+  },
+  {
+    edge: [-1, 0],
+    start: [1, 1],
+    end: [0, 1],
+    faceLeft: 'f1',
+    faceRight: 'f2',
+    previous: 0,
+    next: 2,
+  },
+  {
+    edge: [1, -1],
+    start: [0, 1],
+    end: [1, 0],
+    faceLeft: 'f1',
+    faceRight: 'f2',
+    previous: 1,
+    next: 0,
+  },
+];
 ```
 
 **Attention**: It currently checks for intersections with prior added edges. If an intersection
