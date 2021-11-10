@@ -1,8 +1,8 @@
-name: Node.js CI
+name: Node.js CI - Master Push
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build:
@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [12.x, 14.x]
 
     steps:
       - uses: actions/checkout@v2
