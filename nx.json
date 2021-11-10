@@ -1,0 +1,18 @@
+{
+  "extends": "@nrwl/workspace/presets/npm.json",
+  "npmScope": "geometric",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  }
+}
